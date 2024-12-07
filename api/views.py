@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login as django_login
+from django.contrib.auth import authenticate, login as django_login, logout as django_logout
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
@@ -18,3 +18,9 @@ def login(request):
         return Response()
     else:
         raise ParseError()
+
+
+@api_view(['POST'])
+def logout(request):
+    django_logout(request)
+    return Response()
