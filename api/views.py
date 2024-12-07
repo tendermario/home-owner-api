@@ -6,9 +6,13 @@ from rest_framework.response import Response
 
 @api_view(['POST'])
 def login(request):
+    if 'email' not in request.data or 'password' not in request.data:
+        raise ParseError()
+
     email = request.data['email']
     password = request.data['password']
     user = authenticate(request, username=email, password=password)
+
     if user is not None:
         django_login(request, user)
         return Response()
