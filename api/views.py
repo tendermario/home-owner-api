@@ -1,9 +1,11 @@
 from django.contrib.auth import authenticate, login as django_login, logout as django_logout
+from django.views.decorators.csrf import csrf_protect
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
 
 
+@csrf_protect
 @api_view(['POST'])
 def login(request):
     if 'email' not in request.data or 'password' not in request.data:
@@ -20,6 +22,7 @@ def login(request):
         raise ParseError()
 
 
+@csrf_protect
 @api_view(['POST'])
 def logout(request):
     django_logout(request)
